@@ -13,22 +13,25 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-23.04, ubuntu-22.04, ubuntu-20.04]
-        go-version: [1.20, 1.19, 1.18]
+        os: [ubuntu-23.04, ubuntu-22.04]
+        go-version: [1.20, 1.19]
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
 
-    - name: Set up Go
+    - name: set up GO build environment
       uses: actions/setup-go@v4
       with:
         go-version: ${{matrix.go-version }}
 
-    - name: Pre-Setup
-      run: scripts/install-oniguruma.sh
+    - name: pre-setup
+      run: sudo ONIG_VERSION=6.9.8 scripts/install-oniguruma.sh
 
-    - name: Build
-      run: go build -v ./...
+    - name: build
+      run:  CGO_LDFLAGS=/usr/local/lib/libonig.a go build -v ./...
 
-    - name: Test
-      run: go test -failfast -count=1 -v ./...
+    - name: test - unit tests
+      run: CGO_LDFLAGS=/usr/local/lib/libonig.a go test -failfast -count=1 -v ./...
+
+    - name: test - integration tests
+      run: scripts/smoke-test.sh

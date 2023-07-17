@@ -1,6 +1,9 @@
-curl -sLO https://github.com/kkos/oniguruma/releases/download/v6.9.5_rev1/onig-6.9.5-rev1.tar.gz
-tar xfz onig-6.9.5-rev1.tar.gz
-cd onig-6.9.5
+
+: "${ONIG_VERSION:=6.9.8}"
+
+curl -sLO https://github.com/kkos/oniguruma/releases/download/v${ONIG_VERSION}/onig-${ONIG_VERSION}.tar.gz
+tar xfz onig-${ONIG_VERSION}.tar.gz
+cd onig-${ONIG_VERSION}
 ./configure
 make
 make install
