@@ -26,6 +26,9 @@ jobs:
       with:
         go-version: ${{matrix.go-version }}
 
+    - name: debug
+      run: echo ${GITHUB_WORKSPACE} ${PWD}
+
     - name: git submodule checkout
       run: git submodule update --force --init --recursive && pwd && du -a logstash-patterns-core
 
@@ -36,7 +39,7 @@ jobs:
       run:  CGO_LDFLAGS=/usr/local/lib/libonig.a go build -v ./...
 
     - name: test - unit tests
-      run: CGO_LDFLAGS=/usr/local/lib/libonig.a go test -failfast -count=1 -v ./...
+      run: pwd && CGO_LDFLAGS=/usr/local/lib/libonig.a go test -failfast -count=1 -v ./...
 
     - name: test - integration tests
       run: scripts/smoke-test.sh
