@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-23.04, ubuntu-22.04]
-        go-version: [1.20, 1.19]
+        go-version: ["1.20", "1.19"]
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
@@ -25,7 +25,9 @@ jobs:
         go-version: ${{matrix.go-version }}
 
     - name: pre-setup
-      run: sudo ONIG_VERSION=6.9.8 scripts/install-oniguruma.sh
+      run:
+        - sudo ONIG_VERSION=6.9.8 scripts/install-oniguruma.sh
+        - go mod vendor
 
     - name: build
       run:  CGO_LDFLAGS=/usr/local/lib/libonig.a go build -v ./...
