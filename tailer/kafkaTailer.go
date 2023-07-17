@@ -5,8 +5,8 @@ import (
 	"sync"
 
 	"github.com/Shopify/sarama"
-	configuration "github.com/fstab/grok_exporter/config/v3"
-	"github.com/fstab/grok_exporter/tailer/fswatcher"
+	configuration "github.com/nerd-masters/grok_exporter/config/v3"
+	"github.com/nerd-masters/grok_exporter/tailer/fswatcher"
 	"github.com/sirupsen/logrus"
 )
 

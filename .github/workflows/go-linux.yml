@@ -1,0 +1,45 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: Go
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-23.04, ubuntu-22.04]
+        go-version: ["1.20", "1.19"]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: set up GO build environment
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{matrix.go-version }}
+
+    - name: debug
+      run: echo ${GITHUB_WORKSPACE} ${PWD}
+
+    - name: git submodule checkout
+      run: git submodule update --force --init --recursive && pwd && du -a logstash-patterns-core
+
+    - name: pre-setup
+      run: sudo ONIG_VERSION=6.9.8 scripts/install-oniguruma.sh
+
+    - name: build
+      run:  CGO_LDFLAGS=/usr/local/lib/libonig.a go build -v ./...
+
+    - name: test - unit tests
+      run: pwd && CGO_LDFLAGS=/usr/local/lib/libonig.a go test -failfast -count=1 -v ./...
+
+    - name: test - integration tests
+      run: scripts/smoke-test.sh

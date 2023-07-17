@@ -16,7 +16,7 @@ package template
 
 import (
 	"fmt"
-	"github.com/fstab/grok_exporter/oniguruma"
+	"github.com/nerd-masters/grok_exporter/oniguruma"
 	"os"
 	"text/template/parse"
 )
