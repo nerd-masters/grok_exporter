@@ -16,11 +16,12 @@ package exporter
 
 import (
 	"fmt"
-	configuration "github.com/fstab/grok_exporter/config/v3"
-	"github.com/fstab/grok_exporter/oniguruma"
-	"github.com/fstab/grok_exporter/template"
 	"regexp"
 	"strings"
+
+	configuration "github.com/nerd-masters/grok_exporter/config/v3"
+	"github.com/nerd-masters/grok_exporter/oniguruma"
+	"github.com/nerd-masters/grok_exporter/template"
 )
 
 // Compile a grok pattern string into a regular expression.

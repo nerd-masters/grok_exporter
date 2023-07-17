@@ -15,12 +15,13 @@
 package exporter
 
 import (
-	configuration "github.com/fstab/grok_exporter/config/v3"
-	"github.com/fstab/grok_exporter/oniguruma"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_model/go"
 	"reflect"
 	"testing"
+
+	configuration "github.com/nerd-masters/grok_exporter/config/v3"
+	"github.com/nerd-masters/grok_exporter/oniguruma"
+	"github.com/prometheus/client_golang/prometheus"
+	io_prometheus_client "github.com/prometheus/client_model/go"
 )
 
 func TestCounterVec(t *testing.T) {
