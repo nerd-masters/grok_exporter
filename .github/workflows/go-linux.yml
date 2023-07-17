@@ -27,7 +27,7 @@ jobs:
         go-version: ${{matrix.go-version }}
 
     - name: git submodule checkout
-      run: git submodule update --force --init --recursive
+      run: git submodule update --force --init --recursive && pwd && du -a logstash-patterns-core
 
     - name: pre-setup
       run: sudo ONIG_VERSION=6.9.8 scripts/install-oniguruma.sh
